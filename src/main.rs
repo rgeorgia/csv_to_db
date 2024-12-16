@@ -1,4 +1,5 @@
 use clap::Parser;
+use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
 
@@ -10,20 +11,24 @@ use std::path::{Path, PathBuf};
     author = "Ronverbs",
     about = "Lists all CSV files in a directory"
 )]
-
 struct Args {
     /// The directory to search for CSV files
     directory: Option<String>,
 }
 
-fn default_directory() -> String {
-    ".".to_string() // or any default directory path you prefer
+impl Default for Args {
+    fn default() -> Self {
+        Args {
+            directory: Some(env::current_dir().unwrap().to_str().unwrap().to_string()),
+        }
+    }
 }
 
 fn main() {
     // Parse the command-line arguments
     let args = Args::parse();
-    let directory = args.directory.unwrap_or_else(default_directory);
+    let directory = args.directory.unwrap_or_else(|| env::current_dir().unwrap().to_str().unwrap().to_string());
+
 
     // Check if the directory exists and is a directory
     let path = Path::new(directory.as_str());
