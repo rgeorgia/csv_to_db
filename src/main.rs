@@ -19,6 +19,7 @@ fn main() {
             if csv_files.is_empty() {
                 println!("No CSV files found in '{:?}'.", directory.display());
             } else {
+                
                 println!("Found the following CSV files:");
                 for file in csv_files {
                     println!("- {}", file.display());
